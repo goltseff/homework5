@@ -19,6 +19,7 @@ import { TaskViewContainerComponent } from './components/task-view-container/tas
 import { TaskListContainerComponent } from './components/task-list-container/task-list-container.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { TagsControlComponent } from './components/tags-control/tags-control.component';
 
 
 const appRoutes: Routes = [
@@ -48,7 +49,8 @@ const appRoutes: Routes = [
     TaskListContainerComponent,
     TaskItemComponent,
     LayoutComponent,
-    NoCirillicDirective
+    NoCirillicDirective,
+    TagsControlComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes), FormsModule, ReactiveFormsModule

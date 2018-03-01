@@ -60,38 +60,21 @@ export class TaskViewContainerComponent implements OnInit {
       tags: [],
       type: ''
     };
-    const tmp_array = [];
-    this.tags.forEach(function (value) {
-      const agg_tag: ITagsChecked = {
-        checked: false,
-        name: value
-      };
-      tmp_array.push(agg_tag);
-    });
-    this.edited_tags = tmp_array;
 
     if (this.itemId > 0) {
       this.todoitem.id = this.itemId;
       this.todoitem = this.todoService.getItemByID(this.todoitem.id);
-      const tags = this.todoitem.tags;
-      this.edited_tags.forEach(function (value) {
-        value.checked = false;
-        let needchange = false;
-        tags.forEach(function (value2) {
-          if (value.name === value2) { needchange = true; }
-        });
-        if (needchange) { value.checked = true; }
-      });
     }
-  }
-
-  ngOnInit() {
-    this.initComponent();
     this.editForm = this.formBuilder.group({
       name: [this.todoitem.name, [Validators.required]],
       dscr: [this.todoitem.desc, [Validators.required]],
       status: [this.todoitem.status, [Validators.required]],
+      tags: [this.todoitem.tags]
     });
+  }
+
+  ngOnInit() {
+    this.initComponent();
 
 
 
@@ -123,7 +106,7 @@ export class TaskViewContainerComponent implements OnInit {
       this.todoitem.name = this.editForm.controls.name.value;
       this.todoitem.desc = this.editForm.controls.dscr.value;
       this.todoitem.status = parseInt(this.editForm.controls.status.value, null);
-      this.todoitem.tags = checked_tags;
+      this.todoitem.tags = this.editForm.controls.tags.value;
       this.todoService.setItem(this.todoitem);
       this.router.navigate(['/list']);
     } else {

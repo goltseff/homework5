@@ -26,7 +26,8 @@ export class TaskListContainerComponent implements OnInit {
 
     this.filterForm = this.formBuilder.group({
       id: [''],
-      name: ['']
+      name: [''],
+      tags: [[]]
     });
 
 
@@ -45,6 +46,15 @@ export class TaskListContainerComponent implements OnInit {
   todosFilter() {
     const filter_name = this.filterForm.controls.name.value;
     let filter_id = parseInt(this.filterForm.controls.id.value, null);
+    let filter_tags = '';
+    let tags_arr: string[] = [];
+    tags_arr = this.filterForm.controls.tags.value;
+    tags_arr.sort();
+
+    this.filterForm.controls.tags.value.sort().forEach(element => {
+      filter_tags += element + '|||';
+    });
+
     if (isNaN(filter_id)) { filter_id = 0; }
     this.todoService.loadItemsFromLS();
     this.items = this.todoService.items;
@@ -53,6 +63,13 @@ export class TaskListContainerComponent implements OnInit {
       let can_add = true;
       if (filter_id !== 0 && filter_id !== value.id) { can_add = false; }
       if (filter_name !== '' && filter_name !== value.name) { can_add = false; }
+      if (filter_tags !== '') {
+        let tmp_todo_tags = '';
+        value.tags.sort().forEach(element => {
+          tmp_todo_tags += element + '|||';
+        });
+        if (tmp_todo_tags.indexOf(filter_tags) === -1) {can_add = false; }
+      }
       if (can_add) { filtered_items.push(value); }
     });
     this.items = filtered_items;

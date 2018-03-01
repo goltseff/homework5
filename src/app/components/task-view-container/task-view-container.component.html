@@ -20,9 +20,7 @@
  <tr>
   <td>Тэги</td>
   <td>
-    <ng-container *ngFor="let tag of edited_tags">
-      <label><input type=checkbox id="ch_{{tag.name}}" value=1 (change) ="updateCheckboxes($event)" [checked]="((tag.checked)?'checked':'')" > {{tag.name}}  </label><br>
-    </ng-container>
+    <app-tags-control name="tags" formControlName="tags"></app-tags-control>
   </td>
 </tr>
 <tr>
