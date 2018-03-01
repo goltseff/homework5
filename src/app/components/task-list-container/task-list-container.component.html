@@ -1,0 +1,16 @@
+<input type=button (click)="addTodo()" value="новая задачка">
+<br><br>
+<form [formGroup]="filterForm" (ngSubmit)="todosFilter()">
+    ID: <input formControlName="id" name="id" type="text">
+    Name: <input formControlName="name" name="name" type="text">
+    <input type="submit" value="Фильтровать"> 
+</form>    
+<h3>Список задачек:</h3>
+<div>
+<app-task-item 
+*ngFor="let todoitem of items" 
+[todoitem] = "todoitem" 
+[hidedelete] = "0"
+(delTodo)="delTodo($event)" 
+(editTodo)="editTodo($event)"></app-task-item>
+</div>
